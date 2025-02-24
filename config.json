@@ -1,0 +1,6 @@
+{
+  "module_name": "Crane",
+  "tag": "Cranes",
+  "request_method": "get",
+  "route_path": "/v1/cranes"
+}

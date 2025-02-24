@@ -1,0 +1,47 @@
+package handler
+
+import (
+	"github.com/gofiber/fiber/v2"
+	"pttep.com/engineering-maintenance/src/internal/constant"
+	"pttep.com/engineering-maintenance/src/internal/dto"
+	"pttep.com/engineering-maintenance/src/internal/usecase"
+	"pttep.com/engineering-maintenance/src/internal/util"
+)
+
+type (
+	{{{module_name}}}Handler interface {
+		{{{method_prefix}}}{{{tag}}}(ctx *fiber.Ctx) error
+	}
+
+	{{{lower_module_name}}}Handler struct {
+		{{{lower_module_name}}}Usecase usecase.{{{module_name}}}UseCase
+	}
+)
+
+func New{{{module_name}}}Handler(u usecase.{{{module_name}}}UseCase) {{{module_name}}}Handler {
+	return &{{{lower_module_name}}}Handler{
+		{{{lower_module_name}}}Usecase: u,
+	}
+}
+
+// {{{method_prefix}}}{{{tag}}} godoc
+//
+//	@Summary		{{{method_prefix}}} {{{tag}}}
+//	@Description	{{{method_prefix}}} {{{module_name}}} List
+//	@ID				{{{method_prefix}}}{{{module_name}}}List
+//	@Tags			{{{tag}}}
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	dto.BaseResponse{data=[]domain.Strategy}		"Success"
+//	@Failure		400	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
+//	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
+//	@Router			{{{route_path}}} [{{{lower_method_prefix}}}]
+func (handler *strategyHandler) {{{method_prefix}}}{{{tag}}}(ctx *fiber.Ctx) error {
+	result, err := handler.strategyUsecase.{{{method_prefix}}}{{{tag}}}(ctx.Context())
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(util.GenerateResponse(result, len(result)))
+}
+
