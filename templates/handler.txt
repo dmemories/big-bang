@@ -10,7 +10,7 @@ import (
 
 type (
 	{{{module_name}}}Handler interface {
-		{{{method_prefix}}}{{{tag}}}(ctx *fiber.Ctx) error
+		{{{letter_request_method}}}{{{method_name}}}(ctx *fiber.Ctx) error
 	}
 
 	{{{lower_module_name}}}Handler struct {
@@ -24,24 +24,12 @@ func New{{{module_name}}}Handler(u usecase.{{{module_name}}}UseCase) {{{module_n
 	}
 }
 
-// {{{method_prefix}}}{{{tag}}} godoc
+// {{{letter_request_method}}}{{{method_name}}} godoc
 //
-//	@Summary		{{{method_prefix}}} {{{tag}}}
-//	@Description	{{{method_prefix}}} {{{module_name}}} List
-//	@ID				{{{method_prefix}}}{{{module_name}}}List
+//	@Summary		{{{letter_request_method}}} {{{method_name}}}
+//	@Description	{{{letter_request_method}}} {{{method_name}}} List
+//	@ID				{{{letter_request_method}}}{{{method_name}}}List
 //	@Tags			{{{tag}}}
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	dto.BaseResponse{data=[]domain.Strategy}		"Success"
-//	@Failure		400	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
-//	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
-//	@Router			{{{route_path}}} [{{{lower_method_prefix}}}]
-func (handler *strategyHandler) {{{method_prefix}}}{{{tag}}}(ctx *fiber.Ctx) error {
-	result, err := handler.strategyUsecase.{{{method_prefix}}}{{{tag}}}(ctx.Context())
-	if err != nil {
-		return err
-	}
-
-	return ctx.Status(fiber.StatusOK).JSON(util.GenerateResponse(result, len(result)))
-}
-
+{{{swag_template}}}

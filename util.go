@@ -35,30 +35,15 @@ func LoadConfig(filename string) *Config {
 	return &config
 }
 
-func ReadTemplate(templateName string, result *string) {
+func ReadTemplate(templateName string, mapper map[string]string, result *Template) {
 	templateData, err := os.ReadFile(fmt.Sprintf("%s/%s.txt", TEMPLATE_DIR, templateName))
 	if err != nil {
 		panic(err)
 	}
 
-	*result = string(templateData)
-}
-
-func TemplateMapValue(sourceTxt *string, find string, replace string) {
-	if sourceTxt == nil {
-		panic("")
-	}
-
-	*sourceTxt = strings.ReplaceAll(*sourceTxt, "{{{"+find+"}}}", replace)
-}
-
-func WriteResultFile(resultPath string, resultTxt *string) {
-	if resultTxt == nil {
-		panic("")
-	}
-
-	if err := os.WriteFile(fmt.Sprintf("%s/%s.go", RESULT_DIR, resultPath), []byte(*resultTxt), 0644); err != nil {
-		panic(err)
+	result.ResourceTxt = string(templateData)
+	for k, v := range mapper {
+		result.MapValue(k, v)
 	}
 }
 
@@ -85,4 +70,12 @@ func ToCapFirstLetter(input string) string {
 		return input
 	}
 	return strings.ToUpper(input[:1]) + strings.ToLower(input[1:])
+}
+
+func ToCapFirstLower(input string) string {
+	if len(input) > 0 {
+		input = strings.ToLower(string(input[0])) + input[1:]
+	}
+
+	return input
 }

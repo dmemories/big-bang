@@ -1,0 +1,31 @@
+package usecase
+
+import (
+	"context"
+
+	"pttep.com/engineering-maintenance/src/internal/configs"
+	"pttep.com/engineering-maintenance/src/internal/domain"
+	"pttep.com/engineering-maintenance/src/internal/dto"
+	"pttep.com/engineering-maintenance/src/internal/infrastructure/client"
+	"pttep.com/engineering-maintenance/src/internal/infrastructure/repository"
+)
+
+type (
+	{{{module_name}}}UseCase interface {
+		{{{letter_request_method}}}{{{method_name}}}(ctx context.Context) ({{{dto_model}}}, error)
+	}
+
+	{{{lower_module_name}}}UseCase struct {
+		{{{camel_repository}}}Repository  repository.{{{repository}}}Repository
+	}
+)
+
+func New{{{module_name}}}UseCase({{{camel_repository}}}Repository repository.{{{repository}}}Repository) {{{module_name}}}UseCase {
+	return &{{{lower_module_name}}}UseCase{
+		{{{camel_repository}}}Repository: {{{camel_repository}}}Repository,
+	}
+}
+
+func (u *{{{lower_module_name}}}UseCase) {{{letter_request_method}}}{{{method_name}}}(ctx context.Context) ({{{dto_model}}}, error) {
+	return {{{dto_model}}}{}, nil
+}

@@ -1,0 +1,11 @@
+type Handlers struct {
+    {{{module_name}}}Handler                             {{{module_name}}}Handler
+}
+
+
+
+func NewHandlers(container *di.Container) *Handlers {
+	return &Handlers{
+		{{{module_name}}}Handler:                             New{{{module_name}}}Handler(container.{{{module_name}}}UseCase),
+	}
+}

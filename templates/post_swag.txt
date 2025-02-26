@@ -1,0 +1,26 @@
+//	@Param			request	body		dto.UpsertStrategyRequest						true	"Create Strategy Content Request"
+//	@Success		201		{object}	dto.BaseResponse{message=string}				"Success"
+//	@Failure		400		{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
+//	@Failure		500		{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
+//	@Router			{{{route_path}}} [{{{request_method}}}]
+func (handler *strategyHandler) UpsertStrategies(ctx *fiber.Ctx) error {
+	request, err := bindBody[dto.UpsertStrategyRequest](ctx)
+	if err != nil {
+		return err
+	}
+
+	if err := Validate(request); err != nil {
+		return util.GenerateError(
+			constant.ErrCodeBadRequest,
+			err,
+		)
+	}
+
+	if err := handler.strategyUsecase.UpsertStrategies(ctx.Context(), &request); err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusCreated).JSON(dto.BaseResponse{
+		Message: "Add or Update Success - Strategy upsert successfully",
+	})
+}

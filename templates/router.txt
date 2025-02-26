@@ -1,0 +1,1 @@
+{{{lower_tag}}}.{{{letter_request_method}}}("{{{route_path}}}", handlers.WithTx, handlers.{{{module_name}}}Handler.{{{letter_request_method}}}{{{method_name}}})

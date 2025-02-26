@@ -1,0 +1,11 @@
+type Container struct {
+	{{{module_name}}}UseCase                              usecase.{{{module_name}}}UseCase
+}
+
+
+{{{lower_module_name}}}UseCase := usecase.New{{{module_name}}}UseCase({{{camel_repository}}}Repository)
+
+
+return &Container{
+	{{{module_name}}}UseCase: {{{lower_module_name}}}UseCase,
+}
