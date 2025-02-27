@@ -1,9 +1,0 @@
-{
-  "module_name": "Crane",
-  "tag": "Cranes",
-  "method_name": "CraneGraphStatuses",
-  "request_method": "get",
-  "route_path": "/v1/health-statuses/cranes/graph",
-  "dto_model": "[]*domain.CraneGraphStatus",
-  "repository": "CraneMasterData"
-}

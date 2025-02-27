@@ -1,0 +1,25 @@
+package repository
+
+import (
+	"gorm.io/gorm"
+	"pttep.com/engineering-maintenance/src/internal/infrastructure/database/model"
+)
+
+type (
+	{{{module_name}}}Repository interface {
+		BaseRepository[model.{{{module_name}}}, model.{{{plural_module_name}}}]
+	}
+
+	{{{camel_repository}}}Repository struct {
+		baseRepository[model.{{{module_name}}}, model.{{{plural_module_name}}}]
+	}
+)
+
+func New{{{module_name}}}Repository(db *gorm.DB) {{{module_name}}}Repository {
+	return &{{{camel_repository}}}Repository{
+		baseRepository: baseRepository[model.{{{module_name}}}, model.{{{plural_module_name}}}]{
+			db:          db,
+			tableName:   model.{{{module_name}}}TableName,
+			tablePrefix: model.{{{module_name}}}TablePrefix,
+		}}
+}

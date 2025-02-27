@@ -1,49 +1,89 @@
 package main
 
-import "strings"
-
-var (
-	mainTemplate        Template
-	swagTemplate        Template
-	usecaseTemplate     Template
-	containerTemplate   Template
-	baseHandlerTemplate Template
-	routerTemplate      Template
+import (
+	"big_bang/configs"
+	"big_bang/models"
+	"big_bang/utils"
+	"fmt"
+	"strings"
 )
 
+var (
+	MAIN_CONFIG   = &models.Config{}
+	MAIN_MAPPER   = map[string]string{}
+	METHOD_MAPPER = map[string]string{}
+
+/*
+swagTemplate        models.Template
+usecaseTemplate     models.Template
+containerTemplate   models.Template
+baseHandlerTemplate models.Template
+routerTemplate      models.Template
+*/
+)
+
+func init() {
+	MAIN_CONFIG = utils.LoadConfig("configs/config.json")
+
+	utils.DeleteFilesInDir(configs.RESULT_DIR)
+
+	MAIN_MAPPER = map[string]string{
+		"module_name":        MAIN_CONFIG.ModuleName,
+		"plural_module_name": utils.GetPluralName(MAIN_CONFIG.ModuleName),
+		"tag":                MAIN_CONFIG.Tag,
+		"base_method_name":   MAIN_CONFIG.BaseMethodName,
+		"lower_module_name":  strings.ToLower(MAIN_CONFIG.ModuleName),
+		"route_path":         MAIN_CONFIG.RoutePath,
+
+		"repository":         MAIN_CONFIG.Repository,
+		"camel_repository":   utils.ToFirstLower(MAIN_CONFIG.Repository),
+		"model_alias":        MAIN_CONFIG.ModelAlias,
+		"letter_model_alias": utils.ToFirstUpper(MAIN_CONFIG.ModelAlias),
+	}
+}
+
 func main() {
-	config := LoadConfig("config.json")
+	//methodTemplates := []*models.Template{}
+	for _, val := range MAIN_CONFIG.Methods {
+		if val.Enable < 1 {
+			for _, subFileName := range configs.METHOD_SUB_FILE_NAMES {
+				methodFileName := utils.GetMethodFileName(val.Request, subFileName)
+				METHOD_MAPPER[methodFileName] = ""
+			}
+			continue
+		}
 
-	DeleteFilesInDir(RESULT_DIR)
+		var (
+			prefixMethodName string
+			suffixMethodName string
+		)
 
-	mapper := map[string]string{
-		"module_name":           config.ModuleName,
-		"method_name":           config.MethodName,
-		"tag":                   config.Tag,
-		"lower_tag":             strings.ToLower(config.Tag),
-		"route_path":            config.RoutePath,
-		"letter_request_method": ToCapFirstLetter(config.RequestMethod),
-		"lower_request_method":  strings.ToLower(config.RequestMethod),
-		"lower_module_name":     strings.ToLower(config.ModuleName),
-		"request_method":        strings.ToLower(config.RequestMethod),
-		"dto_model":             config.DtoModel,
-		"unpointer_dto_model":   strings.ReplaceAll(config.DtoModel, "*", ""),
-		"repository":            config.Repository,
-		"camel_repository":      ToCapFirstLower(config.Repository),
+		prefixMethodName = utils.ToFirstUpper(strings.Replace(val.Request, "post", "Create", 1))
+		if val.Plural > 0 {
+			suffixMethodName = utils.GetPluralName(MAIN_CONFIG.BaseMethodName)
+		} else {
+			suffixMethodName = MAIN_CONFIG.BaseMethodName
+		}
+
+		for _, subFileName := range configs.METHOD_SUB_FILE_NAMES {
+			methodFileName := utils.GetMethodFileName(val.Request, subFileName)
+
+			METHOD_MAPPER[methodFileName] = utils.ReadTemplateWithMapper(fmt.Sprintf("%s/%s", configs.METHOD_DIR, methodFileName), MAIN_MAPPER, METHOD_MAPPER, map[string]string{
+				"method_name":         prefixMethodName + suffixMethodName,
+				"suffix_method_name":  suffixMethodName,
+				"dto_model":           val.Model,
+				"unpointer_dto_model": strings.ReplaceAll(val.Model, "*", ""),
+			})
+		}
 	}
 
-	ReadTemplate("handler", mapper, &mainTemplate)
-	ReadTemplate("get_swag", mapper, &swagTemplate)
-	ReadTemplate("usecase", mapper, &usecaseTemplate)
-	ReadTemplate("container", mapper, &containerTemplate)
-	ReadTemplate("base_handler", mapper, &baseHandlerTemplate)
-	ReadTemplate("router", mapper, &routerTemplate)
+	mainTemplate := utils.ReadMainTemplateFile("handler", METHOD_MAPPER, MAIN_MAPPER)
+	usecaseTemplate := utils.ReadMainTemplateFile("usecase", METHOD_MAPPER, MAIN_MAPPER)
+	repositoryTemplate := utils.ReadMainTemplateFile("repository", METHOD_MAPPER, MAIN_MAPPER)
+	modelTemplate := utils.ReadMainTemplateFile("model", METHOD_MAPPER, MAIN_MAPPER)
 
-	mainTemplate.MapTemplate("swag_template", &swagTemplate)
-
-	mainTemplate.WriteResultFile("handler")
-	usecaseTemplate.WriteResultFile("usecase")
-	containerTemplate.WriteResultFile("container")
-	baseHandlerTemplate.WriteResultFile("base_handler")
-	routerTemplate.WriteResultFile("router")
+	mainTemplate.WriteResultFile()
+	usecaseTemplate.WriteResultFile()
+	repositoryTemplate.WriteResultFile()
+	modelTemplate.WriteResultFile()
 }

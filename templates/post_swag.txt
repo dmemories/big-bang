@@ -2,7 +2,7 @@
 //	@Success		201		{object}	dto.BaseResponse{message=string}				"Success"
 //	@Failure		400		{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
 //	@Failure		500		{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
-//	@Router			{{{route_path}}} [{{{request_method}}}]
+//	@Router			{{{route_path}}} [post]
 func (handler *strategyHandler) UpsertStrategies(ctx *fiber.Ctx) error {
 	request, err := bindBody[dto.UpsertStrategyRequest](ctx)
 	if err != nil {

@@ -12,7 +12,9 @@ import (
 
 type (
 	{{{module_name}}}UseCase interface {
-		{{{letter_request_method}}}{{{method_name}}}(ctx context.Context) ({{{dto_model}}}, error)
+		{{{post_usecase_abstract}}}
+		{{{get_usecase_abstract}}}
+		{{{delete_usecase_abstract}}}
 	}
 
 	{{{lower_module_name}}}UseCase struct {
@@ -26,6 +28,8 @@ func New{{{module_name}}}UseCase({{{camel_repository}}}Repository repository.{{{
 	}
 }
 
-func (u *{{{lower_module_name}}}UseCase) {{{letter_request_method}}}{{{method_name}}}(ctx context.Context) ({{{dto_model}}}, error) {
-	return {{{dto_model}}}{}, nil
-}
+{{{post_usecase_method}}}
+
+{{{get_usecase_method}}}
+
+{{{delete_usecase_method}}}

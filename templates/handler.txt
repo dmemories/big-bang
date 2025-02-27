@@ -10,7 +10,9 @@ import (
 
 type (
 	{{{module_name}}}Handler interface {
-		{{{letter_request_method}}}{{{method_name}}}(ctx *fiber.Ctx) error
+		{{{post_handler_abstract}}}
+		{{{get_handler_abstract}}}
+		{{{delete_handler_abstract}}}
 	}
 
 	{{{lower_module_name}}}Handler struct {
@@ -24,12 +26,8 @@ func New{{{module_name}}}Handler(u usecase.{{{module_name}}}UseCase) {{{module_n
 	}
 }
 
-// {{{letter_request_method}}}{{{method_name}}} godoc
-//
-//	@Summary		{{{letter_request_method}}} {{{method_name}}}
-//	@Description	{{{letter_request_method}}} {{{method_name}}} List
-//	@ID				{{{letter_request_method}}}{{{method_name}}}List
-//	@Tags			{{{tag}}}
-//	@Accept			json
-//	@Produce		json
-{{{swag_template}}}
+{{{post_handler_swag}}}
+
+{{{get_handler_swag}}}
+
+{{{delete_handler_swag}}}

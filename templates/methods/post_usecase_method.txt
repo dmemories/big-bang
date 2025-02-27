@@ -1,0 +1,5 @@
+func (u *{{{lower_module_name}}}UseCase) {{{post_usecase_abstract}}} {
+	_, err := u.{{{camel_repository}}}Repository.Save(ctx, model)
+
+	return err
+}

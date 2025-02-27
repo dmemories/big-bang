@@ -1,0 +1,20 @@
+// Get{{{suffix_method_name}}} godoc
+//
+//	@Summary		Get {{{suffix_method_name}}}
+//	@Description	Get {{{suffix_method_name}}}
+//	@ID				{{{method_name}}}
+//	@Tags			{{{tag}}}
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	dto.BaseResponse{data={{{unpointer_dto_model}}}}	"Success"
+//	@Failure		400	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
+//	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
+//	@Router			{{{route_path}}} [get]
+func (handler *{{{lower_module_name}}}Handler) {{{method_name}}}(ctx *fiber.Ctx) error {
+	result, err := handler.{{{lower_module_name}}}Usecase.{{{method_name}}}(ctx.Context())
+	if err != nil {
+		return err
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(util.GenerateResponse(result, len(result)))
+}

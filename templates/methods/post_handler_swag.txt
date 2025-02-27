@@ -1,0 +1,31 @@
+// Post{{{suffix_method_name}}} godoc
+//
+//	@Summary		Create {{{suffix_method_name}}}
+//	@Description	Create {{{suffix_method_name}}}
+//	@ID				{{{method_name}}}
+//	@Tags			{{{tag}}}
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body	{{{unpointer_dto_model}}}			true	"Create {{{suffix_method_name}}} Request"
+//	@Success		201	{object}	dto.BaseResponse{message=string}	"Success"
+//	@Failure		400	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
+//	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
+//	@Router			{{{route_path}}} [post]
+func (handler *{{{lower_module_name}}}Handler) {{{method_name}}}(ctx *fiber.Ctx) error {
+	req, err := bindBody[{{{dto_model}}}](ctx)
+	if err != nil {
+		return err
+	}
+
+	if err := Validate(req); err != nil {
+		return err
+	}
+
+	if err := handler.{{{lower_module_name}}}UseCase.{{{method_name}}}(ctx.Context(), req); err != nil {
+		return err
+	}
+
+	return ctx.Status(http.StatusCreated).JSON(dto.BaseResponse{
+		Message: "Add Success - xxxx added successfully",
+	})
+}

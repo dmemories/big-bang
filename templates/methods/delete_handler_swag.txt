@@ -1,0 +1,27 @@
+// Delete{{{suffix_method_name}}} godoc
+//
+//	@Summary		Delete {{{suffix_method_name}}}
+//	@Description	Delete {{{suffix_method_name}}}
+//	@ID				{{{method_name}}}
+//	@Tags			{{{tag}}}
+//	@Accept			json
+//	@Produce		json
+//	@Param			{{{lower_module_name}}}_id	path	string	true	"{{{module_name}}} ID"	format(uuid)
+//	@Success		201	{object}	dto.BaseResponse{message=string}	"Success"
+//	@Failure		400	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
+//	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
+//	@Router			{{{route_path}}}/{{{{lower_module_name}}}_id} [delete]
+func (handler *{{{lower_module_name}}}Handler) {{{method_name}}}(ctx *fiber.Ctx) error {
+	{{{lower_module_name}}}Id, err := paramUUID(ctx, "{{{lower_module_name}}}_id")
+	if err != nil {
+		return err
+	}
+
+	err = handler.{{{lower_module_name}}}UseCase.{{{method_name}}}(ctx.UserContext(), {{{lower_module_name}}}Id)
+	if err != nil {
+		return err
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
+}
+

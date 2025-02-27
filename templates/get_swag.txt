@@ -1,7 +1,7 @@
 //	@Success		200	{object}	dto.BaseResponse{data={{{unpointer_dto_model}}}}		"Success"
 //	@Failure		400	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
 //	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}	"Error"
-//	@Router			{{{route_path}}} [{{{request_method}}}]
+//	@Router			{{{route_path}}} [get]
 func (handler *{{{lower_module_name}}}Handler) {{{letter_request_method}}}{{{method_name}}}(ctx *fiber.Ctx) error {
 	result, err := handler.{{{lower_module_name}}}Usecase.{{{letter_request_method}}}{{{method_name}}}(ctx.Context())
 	if err != nil {

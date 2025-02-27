@@ -1,0 +1,1 @@
+{{{method_name}}}(ctx context.Context, req {{{dto_model}}}) error

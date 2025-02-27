@@ -1,0 +1,1 @@
+Delete{{{module_name}}}(ctx context.Context, {{{lower_module_name}}}Id uuid.NullUUID) error

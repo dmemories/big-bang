@@ -1,0 +1,8 @@
+func (u *{{{lower_module_name}}}UseCase) {{{delete_usecase_abstract}}} {
+    {{{module_name}}}Model, err := u.{{{camel_repository}}}Repository.FindById(ctx, {{{lower_module_name}}}Id)
+	if err != nil {
+		return handleGormErrors(err, constant.ErrCodeInvalidInputData)
+	}
+
+	return u.{{{camel_repository}}}Repository.Delete(ctx, {{{module_name}}}Model)
+}

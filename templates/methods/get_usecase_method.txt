@@ -1,0 +1,3 @@
+func (u *{{{lower_module_name}}}UseCase) {{{get_usecase_abstract}}} {
+	return {{{dto_model}}}{}, nil
+}

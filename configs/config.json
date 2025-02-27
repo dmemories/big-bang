@@ -1,0 +1,29 @@
+{
+  "module_name": "SSHE",
+  "tag": "SSHE",
+  "route_path": "/v1/sshe",
+  "repository": "SSHE",
+  "model_alias": "she",
+
+  "base_method_name": "SSHE",
+  "methods": [
+    {
+      "request": "post",
+      "enable": 1,
+      "plural": 1,
+      "model": "[]*domain.SSHE"
+    },
+    {
+      "request": "get",
+      "enable": 1,
+      "plural": 1,
+      "model": "[]*domain.SSHE"
+    },
+    {
+      "request": "delete",
+      "enable": 1,
+      "plural": 0,
+      "model": ""
+    }
+  ]
+}

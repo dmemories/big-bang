@@ -1,0 +1,24 @@
+package model
+
+const (
+	{{{module_name}}}TableName   string = "{{{lower_module_name}}}"
+	{{{module_name}}}TablePrefix string = "{{{model_alias}}}"
+)
+
+type (
+	{{{module_name}}} struct {
+		Model               `gorm:"embeddedPrefix:{{{model_alias}}}_"`
+		{{{letter_model_alias}}}Txt       string `gorm:"type:varchar(100);not null"`
+		{{{letter_model_alias}}}Number    uint32 `gorm:"not null"`
+	}
+
+	{{{plural_module_name}}} []{{{module_name}}}
+)
+
+func ({{{module_name}}}) TableName() string {
+	return {{{module_name}}}TableName
+}
+
+func (m {{{module_name}}}) Embedded() Model {
+	return m.Model
+}
