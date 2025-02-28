@@ -2,10 +2,11 @@ package models
 
 type (
 	MethodConfig struct {
-		Request string `json:"request"`
-		Enable  int    `json:"enable"`
-		Plural  int    `json:"plural"`
-		Model   string `json:"model,omitempty"`
+		Request          string `json:"request"`
+		Enable           int    `json:"enable"`
+		Plural           int    `json:"plural"`
+		PrefixMethodName string `json:"prefix_method_name"`
+		Model            string `json:"model,omitempty"`
 	}
 
 	Config struct {

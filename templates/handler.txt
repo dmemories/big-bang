@@ -16,13 +16,13 @@ type (
 	}
 
 	{{{lower_module_name}}}Handler struct {
-		{{{lower_module_name}}}Usecase usecase.{{{module_name}}}UseCase
+		{{{lower_module_name}}}UseCase usecase.{{{module_name}}}UseCase
 	}
 )
 
 func New{{{module_name}}}Handler(u usecase.{{{module_name}}}UseCase) {{{module_name}}}Handler {
 	return &{{{lower_module_name}}}Handler{
-		{{{lower_module_name}}}Usecase: u,
+		{{{lower_module_name}}}UseCase: u,
 	}
 }
 

@@ -1,7 +1,7 @@
 {
   "module_name": "SSHE",
   "tag": "SSHE",
-  "route_path": "/v1/sshe",
+  "route_path": "/v1/sshes",
   "repository": "SSHE",
   "model_alias": "she",
 
@@ -11,18 +11,21 @@
       "request": "post",
       "enable": 1,
       "plural": 1,
-      "model": "[]*domain.SSHE"
+      "prefix_method_name": "Upsert",
+      "model": "dto.UpsertSSHERequest"
     },
     {
       "request": "get",
       "enable": 1,
       "plural": 1,
-      "model": "[]*domain.SSHE"
+      "prefix_method_name": "Get",
+      "model": "[]domain.SSHE"
     },
     {
       "request": "delete",
       "enable": 1,
       "plural": 0,
+      "prefix_method_name": "Delete",
       "model": ""
     }
   ]

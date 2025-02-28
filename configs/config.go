@@ -11,4 +11,5 @@ var METHOD_SUB_FILE_NAMES = []string{
 	"handler_swag",
 	"usecase_abstract",
 	"usecase_method",
+	"usecase_router",
 }

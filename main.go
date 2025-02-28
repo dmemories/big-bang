@@ -53,12 +53,7 @@ func main() {
 			continue
 		}
 
-		var (
-			prefixMethodName string
-			suffixMethodName string
-		)
-
-		prefixMethodName = utils.ToFirstUpper(strings.Replace(val.Request, "post", "Create", 1))
+		var suffixMethodName string
 		if val.Plural > 0 {
 			suffixMethodName = utils.GetPluralName(MAIN_CONFIG.BaseMethodName)
 		} else {
@@ -69,21 +64,29 @@ func main() {
 			methodFileName := utils.GetMethodFileName(val.Request, subFileName)
 
 			METHOD_MAPPER[methodFileName] = utils.ReadTemplateWithMapper(fmt.Sprintf("%s/%s", configs.METHOD_DIR, methodFileName), MAIN_MAPPER, METHOD_MAPPER, map[string]string{
-				"method_name":         prefixMethodName + suffixMethodName,
-				"suffix_method_name":  suffixMethodName,
-				"dto_model":           val.Model,
-				"unpointer_dto_model": strings.ReplaceAll(val.Model, "*", ""),
+				"method_name":           val.PrefixMethodName + suffixMethodName,
+				"prefix_method_name":    val.PrefixMethodName,
+				"suffix_method_name":    suffixMethodName,
+				"dto_model":             val.Model,
+				"unpointer_dto_model":   strings.ReplaceAll(val.Model, "*", ""),
+				"letter_request_method": utils.ToFirstUpper(val.Request),
 			})
 		}
 	}
 
-	mainTemplate := utils.ReadMainTemplateFile("handler", METHOD_MAPPER, MAIN_MAPPER)
+	handlerTemplate := utils.ReadMainTemplateFile("handler", METHOD_MAPPER, MAIN_MAPPER)
 	usecaseTemplate := utils.ReadMainTemplateFile("usecase", METHOD_MAPPER, MAIN_MAPPER)
 	repositoryTemplate := utils.ReadMainTemplateFile("repository", METHOD_MAPPER, MAIN_MAPPER)
 	modelTemplate := utils.ReadMainTemplateFile("model", METHOD_MAPPER, MAIN_MAPPER)
+	routerTemplate := utils.ReadMainTemplateFile("router", METHOD_MAPPER, MAIN_MAPPER)
+	containerTemplate := utils.ReadMainTemplateFile("container", METHOD_MAPPER, MAIN_MAPPER)
+	baseHandlerTemplate := utils.ReadMainTemplateFile("base_handler", METHOD_MAPPER, MAIN_MAPPER)
 
-	mainTemplate.WriteResultFile()
+	handlerTemplate.WriteResultFile()
 	usecaseTemplate.WriteResultFile()
 	repositoryTemplate.WriteResultFile()
 	modelTemplate.WriteResultFile()
+	routerTemplate.WriteResultFile()
+	containerTemplate.WriteResultFile()
+	baseHandlerTemplate.WriteResultFile()
 }

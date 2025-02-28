@@ -1,7 +1,7 @@
 // Get{{{suffix_method_name}}} godoc
 //
-//	@Summary		Get {{{suffix_method_name}}}
-//	@Description	Get {{{suffix_method_name}}}
+//	@Summary		{{{prefix_method_name}}} {{{suffix_method_name}}}
+//	@Description	{{{prefix_method_name}}} {{{suffix_method_name}}}
 //	@ID				{{{method_name}}}
 //	@Tags			{{{tag}}}
 //	@Accept			json
@@ -11,7 +11,7 @@
 //	@Failure		500	{object}	dto.BaseResponse{errors=[]dto.ErrorResponse}		"Error"
 //	@Router			{{{route_path}}} [get]
 func (handler *{{{lower_module_name}}}Handler) {{{method_name}}}(ctx *fiber.Ctx) error {
-	result, err := handler.{{{lower_module_name}}}Usecase.{{{method_name}}}(ctx.Context())
+	result, err := handler.{{{lower_module_name}}}UseCase.{{{method_name}}}(ctx.Context())
 	if err != nil {
 		return err
 	}

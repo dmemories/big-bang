@@ -1,7 +1,7 @@
 // Delete{{{suffix_method_name}}} godoc
 //
-//	@Summary		Delete {{{suffix_method_name}}}
-//	@Description	Delete {{{suffix_method_name}}}
+//	@Summary		{{{prefix_method_name}}} {{{suffix_method_name}}}
+//	@Description	{{{prefix_method_name}}} {{{suffix_method_name}}}
 //	@ID				{{{method_name}}}
 //	@Tags			{{{tag}}}
 //	@Accept			json

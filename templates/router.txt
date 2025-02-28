@@ -1,1 +1,4 @@
-{{{lower_tag}}}.{{{letter_request_method}}}("{{{route_path}}}", handlers.WithTx, handlers.{{{module_name}}}Handler.{{{letter_request_method}}}{{{method_name}}})
+{{{lower_module_name}}} := route.Group("{{{route_path}}}", permissionMiddleware.Authorize())
+{{{post_usecase_router}}}
+{{{get_usecase_router}}}
+{{{delete_usecase_router}}}

@@ -3,7 +3,12 @@ type Container struct {
 }
 
 
-{{{lower_module_name}}}UseCase := usecase.New{{{module_name}}}UseCase({{{camel_repository}}}Repository)
+{{{lower_module_name}}}Repository := repository.New{{{module_name}}}Repository(pgDB)
+
+
+
+{{{lower_module_name}}}UseCase := usecase.New{{{module_name}}}UseCase({{{lower_module_name}}}Repository)
+
 
 
 return &Container{

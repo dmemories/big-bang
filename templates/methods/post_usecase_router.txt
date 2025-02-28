@@ -1,0 +1,1 @@
+{{{lower_module_name}}}.{{{letter_request_method}}}("", handlers.WithTx, handlers.{{{module_name}}}Handler.{{{prefix_method_name}}}{{{suffix_method_name}}})
